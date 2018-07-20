@@ -10,13 +10,18 @@ class SourceComponent extends Component {
     this.updateSource = this.updateSource.bind(this);
   }
 
+  componentDidMount() {
+    Store.dispatch(SourceActions.compileSource());
+  }
+
   updateSource(evt) {
     const source = evt.target.value;
     Store.dispatch(SourceActions.sourceUpdated(source));
+    Store.dispatch(SourceActions.compileSource());
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(`nextProps: ${ JSON.stringify(nextProps, null, 2) }`);
+    // console.log(`nextProps: ${ JSON.stringify(nextProps, null, 2) }`);
   }
 
   render() {
