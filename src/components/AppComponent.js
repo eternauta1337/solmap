@@ -8,12 +8,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <SplitPane split="vertical" defaultSize="20%">
+        <SplitPane split="vertical" defaultSize="40%">
           <SourcePanelComponent/>
-          <SplitPane split="vertical" defaultSize="50%">
-            <OutputComponent target='A' defaultCompilationOptions='--bin-runtime'/>
-            <OutputComponent target='B' defaultCompilationOptions='--bin-runtime --optimize'/>
-          </SplitPane>
+          <OutputComponent/>
         </SplitPane>
       </div>
     );

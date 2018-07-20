@@ -9,17 +9,13 @@ class OutputComponent extends Component {
     super(props);
 
     this.state = {
-      lastKnownSource: undefined,
-      compilationOptions: this.props.defaultCompilationOptions
+      lastKnownSource: undefined
     };
   }
 
   requestCompilation() {
     Store.dispatch(
-      SourceActions.compileSource(
-        this.props.target,
-        this.state.compilationOptions
-      )
+      SourceActions.compileSource()
     );
   }
 
@@ -57,13 +53,6 @@ class OutputComponent extends Component {
     return(
       <div style={{height: '100%', width: '100%'}}>
         <div className="form-group" style={{height: '100%'}}>
-          <input 
-            onChange={evt => this.updateCompilationOptions(evt)}
-            onKeyPress={evt => this.evaluateCompilationOptionsKeyPress(evt)}
-            className='form-control' 
-            type='text' 
-            value={this.state.compilationOptions}
-          />
           <textarea 
             className="form-control" 
             readOnly
@@ -73,7 +62,7 @@ class OutputComponent extends Component {
               fontFamily: 'monospace', 
               fontSize: 13
             }}
-            value={this.props.output[`output${this.props.target}`]}
+            value={this.props.output}
           />
         </div>
       </div>
@@ -84,7 +73,7 @@ class OutputComponent extends Component {
 function mapStateToProps(state) {
   return {
     source: state.SourceReducer.source,
-    output: state.OutputReducer
+    output: state.OutputReducer.output
   };
 }
 

@@ -4,17 +4,17 @@ import axios from 'axios';
 
 const SourceActions = {
 
-  compileSource(target, options = '') {
-    console.log(`SourceActions - compileSource(), options: ${options}`);
+  compileSource() {
+    console.log(`SourceActions - compileSource()`);
     const source = Store.getState().SourceReducer.source;
     return dispatch => {
       axios.post(
         'http://localhost:1337',
-        { source, options }
+        { source }
       )
       .then(response => {
         const output = response.data
-        dispatch(SourceActions.sourceCompiled(target, output));
+        dispatch(SourceActions.sourceCompiled(output));
       })
     }
   },
@@ -23,8 +23,8 @@ const SourceActions = {
     return { type: ActionTypes.SOURCE_UPDATED, source }
   },
 
-  sourceCompiled(target, output) {
-    return { type: ActionTypes.SOURCE_COMPILED, target, output }
+  sourceCompiled(output) {
+    return { type: ActionTypes.SOURCE_COMPILED, output }
   }
 }
 

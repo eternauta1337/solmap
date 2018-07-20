@@ -1,18 +1,17 @@
 import * as ActionTypes from '../actions/ActionTypes';
 
 const initialState = { 
-  name: 'OutputReducer',
-  outputA: '',
-  outputB: ''
+  name: 'OutputReducer'
 };
 
 const OutputReducer = (state = initialState, action) => {
   let newState = state;
 
   if(action.type === ActionTypes.SOURCE_COMPILED) {
+    console.log(`output`, action.output);
     newState = {
       ...state,
-      [`output${action.target}`]: action.output
+      'output': action.output
     };
   }
 

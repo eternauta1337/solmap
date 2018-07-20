@@ -40,53 +40,14 @@ app.use(bodyParser.json());
 app.post('/', (req, res) => {
 
   const source = req.body.source;
-  let options = req.body.options;
-
-  // Extract non solc options.
-  const evmdis = options.includes('--bin') && options.includes('--evmdis');
-  if(evmdis) options = options.replace('--evmdis', '');
-  const disasm= options.includes('--bin') && options.includes('--disasm');
-  if(disasm) options = options.replace('--disasm', '');
-  const evmrun= options.includes('--bin') && options.includes('--evmrun');
-  if(evmrun) options = options.replace('--evmrun', '');
-
-  const needsFile = evmdis | disasm | evmrun;
-  const ext = options.includes(`--bin-runtime`) ? `bin-runtime` : `bin`;
 
   // Pipe incoming solidity source code to solc...
   exec(
-    `echo "${source}" | solc ${options} ${needsFile ? `-o output --overwrite` : ``}`,
+    `echo "${source}" | solc - --bin `,
     (err, stdout, stderr) => {
 
-      if(evmdis) { // Pipe solc output to evmdis...
-        exec(
-          `cat output/Sample.${ext} | evmdis`,
-          (err, stdout, stderr) => {
-            res.send(`${stderr}${stdout}`);
-          }
-        );
-      }
-      else if(disasm) { // Pipe solc output to disasm...
-        exec(
-          `cat output/Sample.${ext} | disasm`,
-          (err, stdout, stderr) => {
-            res.send(`${stderr}${stdout}`);
-          }
-        );
-      }
-      else if(evmrun) { // Pipe solc output to evm...
-        exec(
-          `evm --debug --code $(cat output/Sample.${ext}) run`,
-          (err, stdout, stderr) => {
-            res.send(`${stderr}${stdout}`);
-          }
-        );
-      }
-      else { // Plain solc output...
-
-        // Send plain solc output.
-        res.send(`${stderr}${stdout}`);
-      }
+      // Send plain solc output.
+      res.send(`${stderr}${stdout}`);
     }
   ); 
 });
