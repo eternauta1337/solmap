@@ -10,7 +10,7 @@ const OutputReducer = (state = initialState, action) => {
   if(action.type === ActionTypes.SOURCE_COMPILED) {
     newState = {
       ...state,
-      'output': action.output
+      output: action.output
     };
   }
 

@@ -3,10 +3,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 import SourceReducer from './reducers/SourceReducer';
 import OutputReducer from './reducers/OutputReducer';
+import SelectionReducer from './reducers/SelectionReducer';
 
 const mainReducer = combineReducers({
   SourceReducer,
-  OutputReducer
+  OutputReducer,
+  SelectionReducer
 });
 
 const Store = createStore(

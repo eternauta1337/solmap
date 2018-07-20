@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import { connect } from 'react-redux';
 import Store from '../store';
 import SourceActions from '../actions/SourceActions';
+import SelectionActions from '../actions/SelectionActions';
 
 class OutputComponent extends Component {
 
@@ -49,6 +50,15 @@ class OutputComponent extends Component {
     }
   }
 
+  onTextAreaSelected(textarea) {
+    Store.dispatch(
+      SelectionActions.mapSelectionOnSource({
+        start: textarea.selectionStart,
+        end: textarea.selectionEnd
+      })
+    );
+  }
+
   render() {
     return(
       <div style={{height: '100%', width: '100%'}}>
@@ -62,6 +72,7 @@ class OutputComponent extends Component {
               fontFamily: 'monospace', 
               fontSize: 13
             }}
+            onSelect={evt => this.onTextAreaSelected(evt.target)}
             value={this.props.output}
           />
         </div>

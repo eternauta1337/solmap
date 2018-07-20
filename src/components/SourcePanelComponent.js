@@ -15,6 +15,10 @@ class SourcePanelComponent extends Component {
     Store.dispatch(SourceActions.sourceUpdated(source));
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(`nextProps: ${ JSON.stringify(nextProps, null, 2) }`);
+  }
+
   render() {
     return (
       <div style={{height: '100%'}}>
@@ -36,7 +40,8 @@ class SourcePanelComponent extends Component {
 
 function mapStateToProps(state) {
   return {
-    source: state.SourceReducer.source
+    source: state.SourceReducer.source,
+    selection: state.SelectionReducer.sourceSelRange
   };
 }
 
