@@ -20,7 +20,6 @@ const DisassemblerUtil = {
 
       // Binary opcode like PUSH?
       const binaryLen = DisassemblerUtil.binaryChunkLength(opcode);
-      console.log(binaryLen);
       if(binaryLen > 0) {
 
         // Read number.
@@ -29,7 +28,7 @@ const DisassemblerUtil = {
 
         // Build output.
         res += `${currentInstructionIdx} ${opcode} 0x${num} (${parseInt(num, 16)}) \n`;
-        currentInstructionIdx += 2;
+        currentInstructionIdx += 1 + binaryLen / 2;
       }
       else {
 

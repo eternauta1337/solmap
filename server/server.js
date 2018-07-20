@@ -43,7 +43,7 @@ app.post('/', (req, res) => {
 
   // Pipe incoming solidity source code to solc...
   exec(
-    `echo "${source}" | solc - --bin `,
+    `echo "${source}" | solc --bin`,
     (err, stdout, stderr) => {
 
       // Prepare JSON response.
@@ -51,9 +51,10 @@ app.post('/', (req, res) => {
         output: stdout,
         errors: stderr
       }
+      const respStr = JSON.stringify(resp, null, 2);
       
       // Send plain solc output.
-      res.send( JSON.stringify(resp, null, 2) );
+      res.send(respStr);
     }
   ); 
 });

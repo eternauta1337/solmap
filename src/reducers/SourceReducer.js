@@ -1,14 +1,29 @@
 import * as ActionTypes from '../actions/ActionTypes';
 
 const defaultSource = 
-`pragma solidity ^0.4.21;
+`pragma solidity ^0.4.24;
 
-contract Sample {
+contract BasicToken {
   
-  int x;
+  mapping(address => uint256) balances;
 
-  function add(int a, int b) public {
-    x = a + b;
+  uint256 totalSupply_;
+  
+  function totalSupply() public view returns (uint256) {
+    return totalSupply_;
+  }
+
+  function transfer(address _to, uint256 _value) public returns (bool) {
+    require(_to != address(0));
+    require(_value <= balances[msg.sender]);
+
+    balances[msg.sender] = balances[msg.sender] - _value;
+    balances[_to] = balances[_to] + _value;
+    return true;
+  }
+
+  function balanceOf(address _owner) public view returns (uint256) {
+    return balances[_owner];
   }
 }`
 
