@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Store from '../store'
 import SourceActions from '../actions/SourceActions';
 
-class SourcePanelComponent extends Component {
+class SourceComponent extends Component {
 
   constructor() {
     super();
@@ -45,4 +45,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(SourcePanelComponent);
+export default connect(mapStateToProps)(SourceComponent);
