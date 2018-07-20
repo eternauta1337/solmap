@@ -46,8 +46,14 @@ app.post('/', (req, res) => {
     `echo "${source}" | solc - --bin `,
     (err, stdout, stderr) => {
 
+      // Prepare JSON response.
+      const resp = {
+        output: stdout,
+        errors: stderr
+      }
+      
       // Send plain solc output.
-      res.send(`${stderr}${stdout}`);
+      res.send( JSON.stringify(resp, null, 2) );
     }
   ); 
 });
