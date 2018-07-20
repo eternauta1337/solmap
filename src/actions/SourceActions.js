@@ -1,6 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import Store from '../store';
 import axios from 'axios';
+import Disassembler from '../utils/DisassemblerUtil';
 
 const SourceActions = {
 
@@ -25,6 +26,9 @@ const SourceActions = {
           // Trim non hex data from the output.
           const matches = output.match(/[A-Fa-f0-9]+/g, 'xx');
           output = matches[matches.length - 1];
+
+          // Disassemble.
+          output = Disassembler.disassemble(output);
         }
 
         dispatch(SourceActions.sourceCompiled(output));
