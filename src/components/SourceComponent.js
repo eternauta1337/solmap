@@ -26,18 +26,17 @@ class SourceComponent extends Component {
 
   render() {
     return (
-      <div style={{height: '100%'}}>
-        <div className="form-group" style={{height: '100%'}}>
-          <textarea 
-            className="form-control rounded-0" 
-            style={{
-              height: '100%',
-              fontFamily: 'monospace', 
-              fontSize: 13
-            }}
-            onChange={evt => this.updateSource(evt)}
-            value={this.props.source}/>
-        </div>
+      <div className='container'>
+        <textarea
+          style={{
+            width: '100%',
+            height: '100%',
+            fontFamily: 'monospace', 
+            fontSize: 13
+          }}
+          onChange={evt => this.updateSource(evt)}
+          value={this.props.source}
+        />
       </div>
     );
   }

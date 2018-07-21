@@ -9,7 +9,7 @@ const SelectionActions = {
     // selection on the source.
     const sourceRange = {
       start: 0,
-      end: 1
+      end: 100
     }
 
     return dispatch => {
