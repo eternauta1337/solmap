@@ -4,15 +4,25 @@ class CustomTextarea extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { content: '' }
+    this.state = { 
+      content: '',
+      highlightRange: {start: 0, end: 0}
+    }
     this.updateContent = this.updateContent.bind(this);
   }
 
   componentDidMount() {
     this.setState({
-      content: this.props.initialContent
+      content: this.props.initialContent,
+      highlightRange: this.props.highlightRange
     });
     this.updateHighlights(this.props.initialContent);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.highlightRange);
+    this.state.highlightRange = nextProps.highlightRange;
+    this.updateHighlights(this.state.content);
   }
 
   updateContent(content) {
@@ -22,14 +32,12 @@ class CustomTextarea extends Component {
   }
 
   updateHighlights(content) {
-    const range = {
-      start: 2,
-      end: 150
-    }
+    const range = this.state.highlightRange;
     const pre = content.substring(0, range.start);
     const con = `<mark>${content.substring(range.start, range.end)}</mark>`
     const pos = content.substring(range.end);
-    this.refs.highlights.innerHTML = pre + con + pos;
+    const res = pre + con + pos;
+    this.refs.highlights.innerHTML = res;
   }
 
   render() {
@@ -47,7 +55,7 @@ class CustomTextarea extends Component {
 
         {/* Underlay dummy just for highlights. */}
         <div className="backdrop">
-          <div class="highlights" ref="highlights"> </div>
+          <div className="highlights" ref="highlights"> </div>
         </div>
 
         {/* Visible/editable text. */}

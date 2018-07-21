@@ -26,6 +26,7 @@ class SourceComponent extends Component {
         <CustomTextarea 
           initialContent={this.props.source}
           updateCallback={this.updateSource}
+          highlightRange={this.props.selection}
         />
       </div>
     );
