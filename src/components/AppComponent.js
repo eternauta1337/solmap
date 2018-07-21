@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <SplitPane split="vertical" defaultSize="50%">
+        <SplitPane split="vertical" defaultSize="70%">
           <SourceComponent/>
           <OutputComponent/>
         </SplitPane>

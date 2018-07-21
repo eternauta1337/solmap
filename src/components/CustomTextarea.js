@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import ContentEditable from 'react-contenteditable';
 import _ from 'lodash';
 
 class CustomTextarea extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { content: '' }
     this.updateContent = this.updateContent.bind(this);
   }
@@ -21,25 +20,42 @@ class CustomTextarea extends Component {
     this.props.updateCallback(content);
   }
 
-  wrapContent(content) {
-    const escaped = _.escape(content);
-    return `<div>${escaped}</div>`;
+  applyMarkHighlights(content) {
+    const range = {
+      start: 2,
+      end: 50
+    }
+    const pre = content.substring(0, range.start);
+    const con = `<mark>${content.substring(range.start, range.end)}</mark>`
+    const pos = content.substring(range.end);
+    return pre + con + pos;
   }
 
-  unwrapContent(html) {
-    const withoutTags = html.replace(/<[^>]*>/g, '');
-    const unescapedSource = _.unescape(withoutTags);
-    return unescapedSource;
+  wrapContent(content) {
+    // content = _.escape(content);
+    // content = content.replace(/\r\n/g, '<br>')
+    // content = this.applyMarkHighlights(content);
+    // content = `<div>${content}</div>`;
+    return content;
+  }
+
+  unwrapContent(content) {
+    // content = content.replace(/<[^>]*>/g, '');
+    // content = content.replace(/<br>/g, '\n');
+    // content = _.unescape(content);
+    return content;
   }
 
   render() {
     return (
       <div className='container'>
-        <ContentEditable
+
+        <textarea
           className='editable_content'
-          html={this.wrapContent(this.state.content)}
           onChange={evt => this.updateContent(this.unwrapContent(evt.target.value))}
+          value={this.wrapContent(this.state.content)}
         />
+
       </div>
     );
   }
