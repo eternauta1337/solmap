@@ -7,10 +7,10 @@ class OutputComponent extends Component {
 
   onTextAreaSelected(textarea) {
     Store.dispatch(
-      SelectionActions.mapSelectionOnSource({
-        start: textarea.selectionStart,
-        end: textarea.selectionEnd
-      })
+      SelectionActions.mapSelectionOnSource(
+        textarea.value, 
+        { start: textarea.selectionStart, end: textarea.selectionEnd }
+      )
     );
   }
 
