@@ -43,7 +43,7 @@ app.post('/', (req, res) => {
 
   // Pipe incoming solidity source code to solc...
   exec(
-    `echo "${source}" | solc --bin`,
+    `echo "${source}" | solc --combined-json bin,srcmap`,
     (err, stdout, stderr) => {
 
       // Prepare JSON response.

@@ -19,19 +19,26 @@ const SourceActions = {
 
         // Parse output.
         let output; 
-        if(resp.errors) output = resp.errors;
+        let srcmap;
+        if(resp.errors) output = resp.errors; // Just errors.
         else {
-          output = resp.output;
 
-          // Trim non hex data from the output.
-          const matches = output.match(/[A-Fa-f0-9]+/g, 'xx');
-          output = matches[matches.length - 1];
+          // Parse json compilation results for binary and sourcemap.
+          output = JSON.parse(resp.output);
+          
+          // Assuming there is only one contract, so get any key.
+          let contract;
+          for(var key in output.contracts) {
+            contract = output.contracts[key];
+          }
+          output = contract.bin;
+          srcmap = contract.srcmap;
 
           // Disassemble.
           output = Disassembler.disassemble(output);
         }
 
-        dispatch(SourceActions.sourceCompiled(output));
+        dispatch(SourceActions.sourceCompiled(output, srcmap || ''));
       })
     }
   },
@@ -40,8 +47,8 @@ const SourceActions = {
     return { type: ActionTypes.SOURCE_UPDATED, source }
   },
 
-  sourceCompiled(output) {
-    return { type: ActionTypes.SOURCE_COMPILED, output }
+  sourceCompiled(output, srcmap) {
+    return { type: ActionTypes.SOURCE_COMPILED, output, srcmap }
   }
 }
 

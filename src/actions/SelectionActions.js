@@ -9,14 +9,13 @@ const SelectionActions = {
 
     // Transalete output text selection range
     // to instruction number range.
-    console.log(range);
     function findInstructionNum(content, pos) {
 
       // Sweep back from pos looking for returns.
       // Remember where spaces are found.
       // When a return is found, read the instruction number.
       let prevChar = "";
-      let spaceIdx = 0;
+      let spaceIdx = 1;
       let char = content.charAt(pos);
       while(pos !== 0 && prevChar !== "\n") {
         char = content.charAt(pos);
@@ -32,6 +31,8 @@ const SelectionActions = {
 
     // Use the sourcemap to translate instruction number range
     // to source coordinates.
+    const srcmap = Store.getState().OutputReducer.srcmap;
+    console.log(srcmap);
     const sourceRange = {
       start: 0,
       end: 100
