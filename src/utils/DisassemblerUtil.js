@@ -28,14 +28,15 @@ const DisassemblerUtil = {
 
         // Build output.
         res += `${currentInstructionIdx} ${opcode} 0x${num} (${parseInt(num, 16)})\n`;
-        currentInstructionIdx += 1 + binaryLen / 2;
+        // currentInstructionIdx += 1 + binaryLen / 2;
       }
       else {
 
         // Build output.
         res += `${currentInstructionIdx} ${opcode}\n`;
-        currentInstructionIdx++;
+        // currentInstructionIdx++;
       }
+      currentInstructionIdx++;
     }
 
     return res;
