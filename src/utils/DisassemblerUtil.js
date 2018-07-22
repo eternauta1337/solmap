@@ -6,6 +6,7 @@ const DisassemblerUtil = {
 
     let res = ''; // Will contain the disassembled output.
     let currentInstructionIdx = 0;
+    let currentByteIdx = 0;
     let offset = 0;
 
     // Sweep bytecode string.
@@ -27,14 +28,14 @@ const DisassemblerUtil = {
         offset += binaryLen;
 
         // Build output.
-        res += `${currentInstructionIdx} ${opcode} 0x${num} (${parseInt(num, 16)})\n`;
-        // currentInstructionIdx += 1 + binaryLen / 2;
+        res += `${currentInstructionIdx} [byte ${currentByteIdx}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})\n`;
+        currentByteIdx += 1 + binaryLen / 2;
       }
       else {
 
         // Build output.
-        res += `${currentInstructionIdx} ${opcode}\n`;
-        // currentInstructionIdx++;
+        res += `${currentInstructionIdx} [byte ${currentByteIdx}] ${opcode}\n`;
+        currentByteIdx++;
       }
       currentInstructionIdx++;
     }
