@@ -45,6 +45,11 @@ const SourcemapUtil = {
     }
   },
 
+  // Receives a compressed source map in string format in the form:
+  // "s:l:f:j;s:l:f:j;..."
+  // and returns
+  // a decompressed source map in a nested array format of the form:
+  // [ ['s', 'l', 'f', 'j'], ['s', 'l', 'f', 'j'], ... ]
   decompressSourcemap(srcmap) {
     
     // Compression:
@@ -69,11 +74,11 @@ const SourcemapUtil = {
         if(mapping.length <= idx) mapping.push('');
         newMapping[idx] = mapping[idx] === '' ? lastMapping[idx] : mapping[idx];
       }
-      newMappings.push(newMapping.join(':'));
+      newMappings.push(newMapping);
       lastMapping = newMapping;
     }
 
-    return newMappings.join(';');
+    return newMappings;
   }
 }
 
