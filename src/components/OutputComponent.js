@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import { connect } from 'react-redux';
 import Store from '../store';
 import SelectionActions from '../actions/SelectionActions';
+import CustomTextarea from './CustomTextarea';
 
 class OutputComponent extends Component {
 
@@ -14,19 +15,21 @@ class OutputComponent extends Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.output);
+  }
+
+  updateContent(source) {
+
+  }
+
   render() {
     return(
       <div className='container'>
-        <textarea 
-          readOnly
-          style={{
-            width: '100%',
-            height: '100%',
-            fontFamily: 'monospace', 
-            fontSize: 13
-          }}
-          onSelect={evt => this.onTextAreaSelected(evt.target)}
-          value={this.props.output}
+        <CustomTextarea 
+          initialContent={this.props.output}
+          updateCallback={this.updateContent}
+          highlightRange={this.props.selection}
         />
       </div>
     );
@@ -35,8 +38,8 @@ class OutputComponent extends Component {
 
 function mapStateToProps(state) {
   return {
-    source: state.SourceReducer.source,
-    output: state.OutputReducer.output
+    output: state.OutputReducer.output,
+    selection: state.SelectionReducer.outputSelRange
   };
 }
 

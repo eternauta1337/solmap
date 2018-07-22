@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/ActionTypes';
 const initialState = { 
   name: 'SelectionReducer',
   sourceSelRange: {start: 0, end: 0},
-  outputSelRange: {start: 0, end: 0}
+  outputSelRange: {start: 0, end: 50}
 };
 
 const SelectionReducer = (state = initialState, action) => {

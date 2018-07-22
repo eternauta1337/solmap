@@ -20,6 +20,9 @@ class CustomTextarea extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if(nextProps.initialContent !== this.state.content) {
+      this.state.content = nextProps.initialContent
+    }
     this.state.highlightRange = nextProps.highlightRange;
     this.updateHighlights(this.state.content);
   }
