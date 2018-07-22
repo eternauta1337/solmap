@@ -60,11 +60,14 @@ const SourcemapUtil = {
     const instructionEnd_sourceStart = parseInt(srcmap[instructionRange.end][0], 10);
     const instructionEnd_sourceEnd = parseInt(instructionEnd_sourceStart, 10) + parseInt(srcmap[instructionRange.end][1], 10);
     console.log(`instruction(start) source range: `, instructionStart_sourceStart, instructionStart_sourceEnd);
-    // TODO: merge ranges
+
+    // Merge ranges.
+    const start = Math.min(instructionStart_sourceStart, instructionStart_sourceEnd);
+    const end = Math.max(instructionStart_sourceEnd, instructionEnd_sourceEnd);
 
     return {
-      start: instructionStart_sourceStart,
-      end: instructionStart_sourceEnd
+      start,
+      end
     }
   },
 
