@@ -31,8 +31,8 @@ const SourceActions = {
           for(var key in output.contracts) {
             contract = output.contracts[key];
           }
-          output = contract.bin;
-          srcmap = contract.srcmap;
+          output = contract['bin-runtime'];
+          srcmap = contract['srcmap-runtime'];
 
           // Disassemble.
           output = Disassembler.disassemble(output);
