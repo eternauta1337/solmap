@@ -37,7 +37,7 @@ const SourcemapUtil = {
       pos--;
       char = content.charAt(pos);
     }
-    return parseInt(pos);
+    return parseInt(pos, 10);
   },
 
   findNextReturn(content, pos) {
@@ -49,7 +49,7 @@ const SourcemapUtil = {
       pos++;
       char = content.charAt(pos);
     }
-    return parseInt(pos + 1);
+    return parseInt(pos + 1, 10);
   },
 
   /*
@@ -87,8 +87,8 @@ const SourcemapUtil = {
     srcmap = SourcemapUtil.decompressSourcemap(srcmap);
 
     // Contain range so that it doesn't fall outside of the srcmap range.
-    if(parseInt(instructionRange.end) >= srcmap.length) instructionRange.end = 0;
-    if(parseInt(instructionRange.start) >= srcmap.length) instructionRange.start = 0;
+    if(parseInt(instructionRange.end, 10) >= srcmap.length) instructionRange.end = 0;
+    if(parseInt(instructionRange.start, 10) >= srcmap.length) instructionRange.start = 0;
     
     // Translate instruction range to src range.
     const instructionStart_sourceStart = parseInt(srcmap[instructionRange.start][0], 10);

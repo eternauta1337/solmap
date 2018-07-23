@@ -25,8 +25,11 @@ class CustomTextarea extends Component {
         content: nextProps.initialContent
       });
     }
-    this.state.highlightRange = nextProps.highlightRange;
-    this.updateHighlights(this.state.content);
+    this.setState({
+      highlightRange: nextProps.highlightRange
+    });
+    // this.state.highlightRange = nextProps.highlightRange;
+    this.updateHighlights(this.state.content, nextProps.highlightRange);
   }
 
   updateContent(content) {
@@ -35,8 +38,8 @@ class CustomTextarea extends Component {
     this.updateHighlights(content);
   }
 
-  updateHighlights(content) {
-    const range = this.state.highlightRange;
+  updateHighlights(content, newRange) {
+    const range = newRange || this.state.highlightRange;
     const pre = content.substring(0, range.start);
     const con = `<mark>${content.substring(range.start, range.end)}</mark>`
     const pos = content.substring(range.end);

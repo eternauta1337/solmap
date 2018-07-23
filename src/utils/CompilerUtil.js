@@ -1,17 +1,7 @@
 // NOTE: BrowserSolc is not used as a regular npm dependency.
 // Instead, it is included as a global variable via a require in index.js.
 
-// const compilerVersion = 'soljson-v0.4.20-nightly.2017.11.30+commit.cb16a5d3.js';
 const compilerVersion = 'soljson-v0.4.24+commit.e67f0147.js';
-// const compilerVersion = 'soljson-v0.4.23+commit.124ca40d.js';
-// const compilerVersion = 'soljson-v0.4.22+commit.4cb486ee.js';
-// const compilerVersion = 'soljson-v0.4.21+commit.dfe3193c.js';
-// const compilerVersion = 'soljson-v0.4.20+commit.3155dd80.js';
-// const compilerVersion = 'soljson-v0.4.19+commit.c4cbbb05.js';
-// const compilerVersion = '';
-// const compilerVersion = '';
-// const compilerVersion = '';
-// const compilerVersion = '';
 
 const CompilerUtil = {
 
@@ -60,7 +50,7 @@ const CompilerUtil = {
   },
 
   parseStandardJSONOutputErrors(errors) {
-    if(!errors || errors.length == 0) return errors;
+    if(!errors || errors.length === 0) return errors;
     const newErrors = [];
     for(let i = 0; i < errors.length; i++) {
       newErrors.push(errors[i].formattedMessage);
@@ -71,9 +61,9 @@ const CompilerUtil = {
   getCompiler() {
     console.log(`CompilerUtil - getCompiler(${compilerVersion})`);
     return new Promise(resolve => {
-      console.log(`retrieving compiler...`);
+      console.log(`  retrieving compiler...`);
       window.BrowserSolc.loadVersion(compilerVersion, compiler => {
-        console.log(`compiler retrieved`);
+        console.log(`  compiler retrieved.`);
         CompilerUtil.compiler = compiler;
         resolve();
       })
