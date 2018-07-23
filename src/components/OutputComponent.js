@@ -15,21 +15,13 @@ class OutputComponent extends Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps.output);
-  }
-
-  updateContent(source) {
-
-  }
-
   render() {
     return(
       <div className='container'>
         <CustomTextarea 
           initialContent={this.props.output}
-          updateCallback={this.updateContent}
           highlightRange={this.props.selection}
+          onSelect={textarea => this.onTextAreaSelected(textarea)}
         />
       </div>
     );

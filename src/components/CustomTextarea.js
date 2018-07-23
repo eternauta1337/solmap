@@ -42,6 +42,10 @@ class CustomTextarea extends Component {
     this.refs.highlights.innerHTML = res;
   }
 
+  onSelect(textarea) {
+    this.props.onSelect(textarea);
+  }
+
   render() {
     return (
       <div className='container'>
@@ -64,6 +68,7 @@ class CustomTextarea extends Component {
         <textarea
           className='editable_content'
           onChange={evt => this.updateContent(evt.target.value)}
+          onSelect={evt => this.onSelect(evt.target)}
           value={this.state.content}
         />
 
