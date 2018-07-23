@@ -40,7 +40,7 @@ const CompilerUtil = {
         },
         outputSelection: {
           "*": {
-            "*": ["abi", "ast", "evm.deployedBytecode.opcodes", "evm.deployedBytecode.sourceMap"]
+            "*": ["evm.deployedBytecode.opcodes", "evm.deployedBytecode.sourceMap"]
           }
         }
       }
