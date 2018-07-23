@@ -17,11 +17,13 @@ const SourcemapUtil = {
     let prevChar = "";
     let spaceIdx = 1;
     let char = content.charAt(pos);
-    while(pos !== 0 && prevChar !== "\n") {
+    let count = 0;
+    while(pos !== 0 && prevChar !== "\n" && count < 10000) {
       char = content.charAt(pos);
       if(char === " ") spaceIdx = pos;
       pos--;
       prevChar = content.charAt(pos - 1);
+      count++;
     }
     return parseInt(content.substring(pos, spaceIdx), 10);
   },
@@ -37,6 +39,7 @@ const SourcemapUtil = {
     while(pos > 0 && char !== "\n" && count < 10000) {
       pos--;
       char = content.charAt(pos);
+      count++;
     }
     return parseInt(pos, 10);
   },
@@ -50,6 +53,7 @@ const SourcemapUtil = {
     while(pos !== content.length - 1 && char !== "\n" && count < 10000) {
       pos++;
       char = content.charAt(pos);
+      count++;
     }
     return parseInt(pos + 1, 10);
   },
