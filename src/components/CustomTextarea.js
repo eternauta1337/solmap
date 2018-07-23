@@ -72,6 +72,7 @@ class CustomTextarea extends Component {
 
         {/* Visible/editable text. */}
         <textarea
+          spellCheck='false'
           className='editable_content'
           onChange={evt => this.updateContent(evt.target.value)}
           onSelect={evt => this.onSelect(evt.target)}
