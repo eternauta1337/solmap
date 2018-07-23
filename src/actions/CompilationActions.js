@@ -14,10 +14,11 @@ const CompilationActions = {
       // Use solc-js to compile.
       let output = await CompilerUtil.compile(source);
       output = JSON.parse(output);
+      console.log(`OUTPUT: `, output);
       let srcmap;
 
       // If there are any errors, display that only.
-      if(output.errors) output = output.errors.join('\n');
+      if(output.errors) output = CompilerUtil.parseStandardJSONOutputErrors(output.errors).join('\n');
       // Otherwise parse opcodes and source map.
       else {
 

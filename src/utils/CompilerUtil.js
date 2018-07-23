@@ -59,6 +59,15 @@ const CompilerUtil = {
     return nativeSourcesStr;
   },
 
+  parseStandardJSONOutputErrors(errors) {
+    if(!errors || errors.length == 0) return errors;
+    const newErrors = [];
+    for(let i = 0; i < errors.length; i++) {
+      newErrors.push(errors[i].formattedMessage);
+    }
+    return newErrors;
+  },
+
   getCompiler() {
     console.log(`CompilerUtil - getCompiler(${compilerVersion})`);
     return new Promise(resolve => {
