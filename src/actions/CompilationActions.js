@@ -13,18 +13,21 @@ const CompilationActions = {
 
       // Use solc-js to compile.
       let output = await CompilerUtil.compile(source);
+      output = JSON.parse(output);
       let srcmap;
 
-      if(output.errors) output = output.errors.join('\n'); // Just errors.
+      // If there are any errors, display that only.
+      if(output.errors) output = output.errors.join('\n');
+      // Otherwise parse opcodes and source map.
       else {
 
         // Assuming there is only one contract, so get any key.
         let contract;
         for(var key in output.contracts) {
-          contract = output.contracts[key];
+          contract = output.contracts[key][key];
         }
-        output = contract['runtimeBytecode'];
-        srcmap = contract['srcmapRuntime'];
+        output = contract.evm.deployedBytecode['object'];
+        srcmap = contract.evm.deployedBytecode['sourceMap'];
 
         // Disassemble.
         output = Disassembler.disassemble(output);

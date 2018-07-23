@@ -17,6 +17,8 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+// Initialize solc-js via browser-solc.
+require('browser-solc');
 window.addEventListener('load', async () => {
   await CompilerUtil.getCompiler();
   Store.dispatch(CompilationActions.compileSource());
