@@ -33,7 +33,8 @@ const SourcemapUtil = {
     // When a return is found, return the position.
     pos--;
     let char = content.charAt(pos);
-    while(pos > 0 && char !== "\n") {
+    let count = 0;
+    while(pos > 0 && char !== "\n" && count < 10000) {
       pos--;
       char = content.charAt(pos);
     }
@@ -45,7 +46,8 @@ const SourcemapUtil = {
     // Sweep forward from pos looking for returns.
     // When a return is found, return the position.
     let char = content.charAt(pos);
-    while(pos !== content.length - 1 && char !== "\n") {
+    let count = 0;
+    while(pos !== content.length - 1 && char !== "\n" && count < 10000) {
       pos++;
       char = content.charAt(pos);
     }

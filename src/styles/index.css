@@ -15,7 +15,7 @@ textarea {
   height: 100%;
   position: absolute;
   font-family: monospace; 
-  font-size: 13;
+  font-size: 12;
   background-color: transparent;
 }
 
@@ -35,7 +35,7 @@ textarea {
   white-space: pre-wrap;
   word-wrap: break-word;
   font-family: monospace; 
-  font-size: 13;
+  font-size: 12;
 }
 
 mark {
