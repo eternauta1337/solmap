@@ -7,6 +7,8 @@ import './styles/splitpane.css';
 
 import Store from './store';
 import App from './components/AppComponent.js';
+import CompilerUtil from './utils/CompilerUtil';
+import CompilationActions from './actions/CompilationActions';
 
 ReactDOM.render(
   <Provider store={Store}>
@@ -14,3 +16,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+window.addEventListener('load', async () => {
+  await CompilerUtil.getCompiler();
+  Store.dispatch(CompilationActions.compileSource());
+});

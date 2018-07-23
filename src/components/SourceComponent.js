@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Store from '../store'
+import Store from '../store';
 import CompilationActions from '../actions/CompilationActions';
 import CustomTextarea from './CustomTextarea';
 
@@ -9,10 +9,6 @@ class SourceComponent extends Component {
   constructor() {
     super();
     this.updateSource = this.updateSource.bind(this);
-  }
-
-  componentDidMount() {
-    Store.dispatch(CompilationActions.compileSource());
   }
 
   updateSource(source) {

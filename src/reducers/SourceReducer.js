@@ -1,7 +1,7 @@
 import * as ActionTypes from '../actions/ActionTypes';
 
 const defaultSource = 
-`pragma solidity ^0.4.24;
+`pragma solidity ^0.4.19;
 
 contract BasicToken {
   

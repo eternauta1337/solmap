@@ -3,22 +3,27 @@ import Store from '../store';
 import axios from 'axios';
 import Disassembler from '../utils/DisassemblerUtil';
 import CompilerUtil from '../utils/CompilerUtil';
-import MappingActions from './MappingActions';
+import SelectionActions from './SelectionActions';
 
-const CompilationActions = {
+const SourceActions = {
 
   compileSource() {
-    console.log(`CompilationActions - compileSource()`);
+    console.log(`SourceActions - compileSource()`);
     const source = Store.getState().SourceReducer.source;
     return async dispatch => {
 
-      // Use solc-js to compile.
-      let output = await CompilerUtil.compile(source);
-      let srcmap;
+      // Compile using solc-js.
+      const output = CompilerUtil.compile(sources);
 
-      if(output.errors) output = output.errors.join('\n'); // Just errors.
+      // Parse output.
+      let output; 
+      let srcmap;
+      if(resp.errors) output = resp.errors; // Just errors.
       else {
 
+        // Parse json compilation results for binary and sourcemap.
+        output = JSON.parse(resp.output);
+        
         // Assuming there is only one contract, so get any key.
         let contract;
         for(var key in output.contracts) {
@@ -31,13 +36,14 @@ const CompilationActions = {
         output = Disassembler.disassemble(output);
       }
 
-      dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
+      //   dispatch(SourceActions.sourceCompiled(output, srcmap || ''));
 
-      // Compilation resets source mappings.
-      dispatch(MappingActions.outputSelected({start: 0, end: 0}));
-      dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
-
-      // Use the server to compile using native solc.
+      //   // Compilation resets source mappings.
+      //   dispatch(SelectionActions.outputSelected({start: 0, end: 0}));
+      //   dispatch(SelectionActions.sourceSelected({start: 0, end: 0}));
+      // Compile using native solc.
+      // (Requires server running).
+      // return;
       // axios.post(
       //   'http://localhost:1337',
       //   { source }
@@ -67,11 +73,11 @@ const CompilationActions = {
       //     output = Disassembler.disassemble(output);
       //   }
 
-      //   dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
+      //   dispatch(SourceActions.sourceCompiled(output, srcmap || ''));
 
       //   // Compilation resets source mappings.
-      //   dispatch(MappingActions.outputSelected({start: 0, end: 0}));
-      //   dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
+      //   dispatch(SelectionActions.outputSelected({start: 0, end: 0}));
+      //   dispatch(SelectionActions.sourceSelected({start: 0, end: 0}));
       // })
     }
   },
@@ -85,4 +91,4 @@ const CompilationActions = {
   }
 }
 
-export default CompilationActions;
+export default SourceActions;
