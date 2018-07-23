@@ -36,7 +36,7 @@ class SourceComponent extends Component {
 function mapStateToProps(state) {
   return {
     source: state.SourceReducer.source,
-    selection: state.SelectionReducer.sourceSelRange
+    selection: state.MappingReducer.sourceSelRange
   };
 }
 

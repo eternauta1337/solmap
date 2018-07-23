@@ -1,12 +1,12 @@
 import * as ActionTypes from '../actions/ActionTypes';
 
 const initialState = { 
-  name: 'SelectionReducer',
+  name: 'MappingReducer',
   sourceSelRange: {start: 0, end: 0},
   outputSelRange: {start: 0, end: 0}
 };
 
-const SelectionReducer = (state = initialState, action) => {
+const MappingReducer = (state = initialState, action) => {
   let newState = state;
 
   if(action.type === ActionTypes.SOURCE_SELECTED) {
@@ -26,4 +26,4 @@ const SelectionReducer = (state = initialState, action) => {
   return newState;
 };
 
-export default SelectionReducer;
+export default MappingReducer;

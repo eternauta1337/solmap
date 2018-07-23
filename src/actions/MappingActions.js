@@ -8,7 +8,7 @@ const MappingActions = {
 
     // Selecting on the output will trigger a mapped
     // selection on the source.
-    const srcmap = Store.getState().OutputReducer.srcmap;
+    const srcmap = Store.getState().CompilationReducer.srcmap;
     const sourceRange = SourcemapUtil.disassemblerRangeToSourceRange(
       content, 
       range,

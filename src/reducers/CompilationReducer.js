@@ -1,12 +1,12 @@
 import * as ActionTypes from '../actions/ActionTypes';
 
 const initialState = { 
-  name: 'OutputReducer',
+  name: 'CompilationReducer',
   output: '',
   srcmap: ''
 };
 
-const OutputReducer = (state = initialState, action) => {
+const CompilationReducer = (state = initialState, action) => {
   let newState = state;
 
   if(action.type === ActionTypes.SOURCE_COMPILED) {
@@ -20,4 +20,4 @@ const OutputReducer = (state = initialState, action) => {
   return newState;
 };
 
-export default OutputReducer;
+export default CompilationReducer;

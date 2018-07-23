@@ -31,8 +31,8 @@ class OutputComponent extends Component {
 
 function mapStateToProps(state) {
   return {
-    output: state.OutputReducer.output,
-    selection: state.SelectionReducer.outputSelRange
+    output: state.CompilationReducer.output,
+    selection: state.MappingReducer.outputSelRange
   };
 }
 

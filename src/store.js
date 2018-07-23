@@ -2,13 +2,13 @@ import thunkMiddleware from 'redux-thunk'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 import SourceReducer from './reducers/SourceReducer';
-import OutputReducer from './reducers/OutputReducer';
-import SelectionReducer from './reducers/SelectionReducer';
+import CompilationReducer from './reducers/CompilationReducer';
+import MappingReducer from './reducers/MappingReducer';
 
 const mainReducer = combineReducers({
   SourceReducer,
-  OutputReducer,
-  SelectionReducer
+  CompilationReducer,
+  MappingReducer
 });
 
 const Store = createStore(
