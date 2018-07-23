@@ -4,16 +4,20 @@ import SourcemapUtil from '../utils/SourcemapUtil';
 
 const MappingActions = {
 
-  // Selecting on the output will trigger a mapped
-  // selection on the source.
   mapSelectionOnSource(content, range) {
 
+    // Selecting on the output will trigger a mapped
+    // selection on the source.
     const srcmap = Store.getState().OutputReducer.srcmap;
     const sourceRange = SourcemapUtil.disassemblerRangeToSourceRange(
       content, 
       range,
       srcmap
     );
+
+    // Also, selecting on the output will trigger
+    // a modified solection on itself.
+    range = SourcemapUtil.expandDisassemblerRange(content, range);
 
     return dispatch => {
       dispatch(MappingActions.sourceSelected(sourceRange));
