@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
 import Store from '../store';
-import SelectionActions from '../actions/SelectionActions';
+import MappingActions from '../actions/MappingActions';
 import CustomTextarea from './CustomTextarea';
 
 class OutputComponent extends Component {
@@ -9,7 +9,7 @@ class OutputComponent extends Component {
   onTextAreaSelected(textarea) {
     const range = { start: textarea.selectionStart, end: textarea.selectionEnd };
     Store.dispatch(
-      SelectionActions.mapSelectionOnSource(
+      MappingActions.mapSelectionOnSource(
         textarea.value, 
         range
       )

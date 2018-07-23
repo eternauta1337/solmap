@@ -2,12 +2,12 @@ import * as ActionTypes from './ActionTypes';
 import Store from '../store';
 import axios from 'axios';
 import Disassembler from '../utils/DisassemblerUtil';
-import SelectionActions from './SelectionActions';
+import MappingActions from './MappingActions';
 
-const SourceActions = {
+const CompilationActions = {
 
   compileSource() {
-    console.log(`SourceActions - compileSource()`);
+    console.log(`CompilationActions - compileSource()`);
     const source = Store.getState().SourceReducer.source;
     return dispatch => {
       axios.post(
@@ -39,11 +39,11 @@ const SourceActions = {
           output = Disassembler.disassemble(output);
         }
 
-        dispatch(SourceActions.sourceCompiled(output, srcmap || ''));
+        dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
 
         // Compilation resets source mappings.
-        dispatch(SelectionActions.outputSelected({start: 0, end: 0}));
-        dispatch(SelectionActions.sourceSelected({start: 0, end: 0}));
+        dispatch(MappingActions.outputSelected({start: 0, end: 0}));
+        dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
       })
     }
   },
@@ -57,4 +57,4 @@ const SourceActions = {
   }
 }
 
-export default SourceActions;
+export default CompilationActions;

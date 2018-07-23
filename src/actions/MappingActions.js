@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes';
 import Store from '../store';
 import SourcemapUtil from '../utils/SourcemapUtil';
 
-const SelectionActions = {
+const MappingActions = {
 
   // Selecting on the output will trigger a mapped
   // selection on the source.
@@ -16,14 +16,14 @@ const SelectionActions = {
     );
 
     return dispatch => {
-      dispatch(SelectionActions.sourceSelected(sourceRange));
-      dispatch(SelectionActions.outputSelected(range));
+      dispatch(MappingActions.sourceSelected(sourceRange));
+      dispatch(MappingActions.outputSelected(range));
     }
   },
 
   // mapSelectionOnOutput(sourceSelectionRange) {
   //   return dispatch => {
-  //     // dispatch(SelectionActions.outputSelected(output));
+  //     // dispatch(MappingActions.outputSelected(output));
   //   }
   // },
 
@@ -36,4 +36,4 @@ const SelectionActions = {
   }
 }
 
-export default SelectionActions;
+export default MappingActions;

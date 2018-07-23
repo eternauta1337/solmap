@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Store from '../store'
-import SourceActions from '../actions/SourceActions';
+import CompilationActions from '../actions/CompilationActions';
 import CustomTextarea from './CustomTextarea';
 
 class SourceComponent extends Component {
@@ -12,12 +12,12 @@ class SourceComponent extends Component {
   }
 
   componentDidMount() {
-    Store.dispatch(SourceActions.compileSource());
+    Store.dispatch(CompilationActions.compileSource());
   }
 
   updateSource(source) {
-    Store.dispatch(SourceActions.sourceUpdated(source));
-    Store.dispatch(SourceActions.compileSource());
+    Store.dispatch(CompilationActions.sourceUpdated(source));
+    Store.dispatch(CompilationActions.compileSource());
   }
 
   render() {
