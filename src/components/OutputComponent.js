@@ -7,10 +7,11 @@ import CustomTextarea from './CustomTextarea';
 class OutputComponent extends Component {
 
   onTextAreaSelected(textarea) {
+    const range = { start: textarea.selectionStart, end: textarea.selectionEnd };
     Store.dispatch(
       SelectionActions.mapSelectionOnSource(
         textarea.value, 
-        { start: textarea.selectionStart, end: textarea.selectionEnd }
+        range
       )
     );
   }

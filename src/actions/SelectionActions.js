@@ -17,6 +17,7 @@ const SelectionActions = {
 
     return dispatch => {
       dispatch(SelectionActions.sourceSelected(sourceRange));
+      dispatch(SelectionActions.outputSelected(range));
     }
   },
 

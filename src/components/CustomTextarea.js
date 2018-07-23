@@ -29,7 +29,7 @@ class CustomTextarea extends Component {
 
   updateContent(content) {
     this.setState({ content });
-    this.props.updateCallback(content);
+    if(this.props.updateCallback) this.props.updateCallback(content);
     this.updateHighlights(content);
   }
 
@@ -43,7 +43,11 @@ class CustomTextarea extends Component {
   }
 
   onSelect(textarea) {
-    this.props.onSelect(textarea);
+    if(this.props.onSelect) this.props.onSelect(textarea);
+  }
+
+  onScroll(textarea) {
+    this.refs.backdrop.scrollTop = textarea.scrollTop;
   }
 
   render() {
@@ -60,7 +64,7 @@ class CustomTextarea extends Component {
         */}
 
         {/* Underlay dummy just for highlights. */}
-        <div className="backdrop">
+        <div className="backdrop" ref="backdrop">
           <div className="highlights" ref="highlights"> </div>
         </div>
 
@@ -69,6 +73,7 @@ class CustomTextarea extends Component {
           className='editable_content'
           onChange={evt => this.updateContent(evt.target.value)}
           onSelect={evt => this.onSelect(evt.target)}
+          onScroll={evt => this.onScroll(evt.target)}
           value={this.state.content}
         />
 
