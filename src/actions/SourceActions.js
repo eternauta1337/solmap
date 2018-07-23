@@ -2,6 +2,7 @@ import * as ActionTypes from './ActionTypes';
 import Store from '../store';
 import axios from 'axios';
 import Disassembler from '../utils/DisassemblerUtil';
+import SelectionActions from './SelectionActions';
 
 const SourceActions = {
 
@@ -39,6 +40,10 @@ const SourceActions = {
         }
 
         dispatch(SourceActions.sourceCompiled(output, srcmap || ''));
+
+        // Compilation resets source mappings.
+        dispatch(SelectionActions.outputSelected({start: 0, end: 0}));
+        dispatch(SelectionActions.sourceSelected({start: 0, end: 0}));
       })
     }
   },
