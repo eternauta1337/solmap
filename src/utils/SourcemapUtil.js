@@ -27,13 +27,13 @@ const SourcemapUtil = {
   },
 
   findPreviousReturn(content, pos) {
-    if(pos === 0) return parseInt(pos);
+    if(pos === 0) return 0;
   
     // Sweep back from pos looking for returns.
     // When a return is found, return the position.
     pos--;
     let char = content.charAt(pos);
-    while(char !== "\n") {
+    while(pos > 0 && char !== "\n") {
       pos--;
       char = content.charAt(pos);
     }
