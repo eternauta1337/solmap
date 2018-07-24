@@ -1,5 +1,5 @@
 // NOTE: BrowserSolc is not used as a regular npm dependency.
-// Instead, it is included as a global variable via a require in index.js.
+// Instead, it is included as a global variable injected from a script in index.html.
 
 const compilerVersion = 'soljson-v0.4.24+commit.e67f0147.js';
 
@@ -65,6 +65,7 @@ const CompilerUtil = {
       window.BrowserSolc.loadVersion(compilerVersion, compiler => {
         console.log(`  compiler retrieved.`);
         CompilerUtil.compiler = compiler;
+        console.log(`COMPILER: `, compiler);
         resolve();
       })
     });
