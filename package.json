@@ -2,11 +2,10 @@
   "name": "solmap",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ajsantander.github.io/solmap",
+  "homepage": "https://solmap.zeppelin.solutions",
   "dependencies": {
     "body-parser": "^1.18.3",
     "browser-solc": "^1.0.0",
-    "gh-pages": "^1.2.0",
     "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
