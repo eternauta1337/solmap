@@ -14,7 +14,7 @@ const CompilerUtil = {
       }
 
       // Build solc standard json interface object.
-      const sources = { "BasicToken": source };
+      const sources = { "Source": source };
       const options = { optimize: false };
       const json = CompilerUtil.buildStandardJSONInput(sources, options)
       const output = CompilerUtil.compiler.compileStandardWrapper(json);
@@ -65,7 +65,7 @@ const CompilerUtil = {
       window.BrowserSolc.loadVersion(compilerVersion, compiler => {
         console.log(`  compiler retrieved.`);
         CompilerUtil.compiler = compiler;
-        console.log(`COMPILER: `, compiler);
+        console.log(`  COMPILER: `, compiler);
         resolve();
       })
     });

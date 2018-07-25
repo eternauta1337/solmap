@@ -14,7 +14,7 @@ const CompilationActions = {
       // Use solc-js to compile.
       let output = await CompilerUtil.compile(source);
       output = JSON.parse(output);
-      console.log(`OUTPUT: `, output);
+      console.log(`  OUTPUT: `, output);
       let srcmap;
 
       // If there are any errors, display that only.
@@ -23,10 +23,8 @@ const CompilationActions = {
       else {
 
         // Assuming there is only one contract, so get any key.
-        let contract;
-        for(var key in output.contracts) {
-          contract = output.contracts[key][key];
-        }
+        let contract = CompilationActions.getFirstKeyInObject(output.contracts); // Gets object under "Source"
+        contract = CompilationActions.getFirstKeyInObject(contract); // Gets object under "<ContractName>"
         output = contract.evm.deployedBytecode['object'];
         srcmap = contract.evm.deployedBytecode['sourceMap'];
 
@@ -39,6 +37,12 @@ const CompilationActions = {
       // Compilation resets source mappings.
       dispatch(MappingActions.outputSelected({start: 0, end: 0}));
       dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
+    }
+  },
+
+  getFirstKeyInObject(object) {
+    for(var key in object) {
+      return object[key];
     }
   },
 
