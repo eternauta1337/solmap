@@ -25,8 +25,8 @@ const CompilationActions = {
         // Assuming there is only one contract, so get any key.
         let contract = CompilationActions.getFirstKeyInObject(output.contracts); // Gets object under "Source"
         contract = CompilationActions.getFirstKeyInObject(contract); // Gets object under "<ContractName>"
-        output = contract.evm.deployedBytecode['object'];
-        srcmap = contract.evm.deployedBytecode['sourceMap'];
+        output = contract.evm.bytecode.object;
+        srcmap = contract.evm.bytecode.sourceMap + ';' + contract.evm.deployedBytecode.sourceMap;
 
         // Disassemble.
         output = Disassembler.disassemble(output);

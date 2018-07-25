@@ -93,8 +93,14 @@ const SourcemapUtil = {
     srcmap = SourcemapUtil.decompressSourcemap(srcmap);
 
     // Contain range so that it doesn't fall outside of the srcmap range.
-    if(parseInt(instructionRange.end, 10) >= srcmap.length) instructionRange.end = 0;
-    if(parseInt(instructionRange.start, 10) >= srcmap.length) instructionRange.start = 0;
+    if(parseInt(instructionRange.end, 10) >= srcmap.length) { 
+      instructionRange.end = 0; 
+      console.log(`  srcmap out of range`);
+    }
+    if(parseInt(instructionRange.start, 10) >= srcmap.length) { 
+      instructionRange.start = 0; 
+      console.log(`  srcmap out of range`);
+    }
     
     // Translate instruction range to src range.
     const instructionStart_sourceStart = parseInt(srcmap[instructionRange.start][0], 10);
@@ -118,6 +124,7 @@ const SourcemapUtil = {
   // a decompressed source map in a nested array format of the form:
   // [ ['s', 'l', 'f', 'j'], ['s', 'l', 'f', 'j'], ... ]
   decompressSourcemap(srcmap) {
+    console.log(`srcmap (compressed): `, srcmap);
     
     // Compression:
     // 1:2:1;1:9:1;2:1:2;2:1:2;2:1:2

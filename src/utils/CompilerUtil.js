@@ -40,7 +40,11 @@ const CompilerUtil = {
         },
         outputSelection: {
           "*": {
-            "*": ["evm.deployedBytecode.opcodes", "evm.deployedBytecode.sourceMap"]
+            "*": [
+              "evm.bytecode.opcodes", 
+              "evm.bytecode.sourceMap",
+              "evm.deployedBytecode.sourceMap"
+            ]
           }
         }
       }

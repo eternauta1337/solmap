@@ -3,40 +3,32 @@ import * as ActionTypes from '../actions/ActionTypes';
 const defaultSource = 
 `pragma solidity ^0.4.24;
 
-contract Ownable {
-  address public owner;
+contract BasicToken {
+  mapping(address => uint256) balances;
 
-  event OwnershipRenounced(address indexed previousOwner);
-  event OwnershipTransferred(
-    address indexed previousOwner,
-    address indexed newOwner
-  );
-
+  uint256 totalSupply_;
   constructor() public {
-    owner = msg.sender;
+      totalSupply_ = 10000;
+      balances[msg.sender] = totalSupply_;
   }
 
-  modifier onlyOwner() {
-    require(msg.sender == owner);
-    _;
+  function totalSupply() public view returns (uint256) {
+    return totalSupply_;
   }
 
-  function renounceOwnership() public onlyOwner {
-    emit OwnershipRenounced(owner);
-    owner = address(0);
+  function transfer(address _to, uint256 _value) public returns (bool) {
+    require(_to != address(0));
+    require(_value <= balances[msg.sender]);
+
+    balances[msg.sender] = balances[msg.sender] - _value;
+    balances[_to] = balances[_to] + _value;
+    return true;
   }
 
-  function transferOwnership(address _newOwner) public onlyOwner {
-    _transferOwnership(_newOwner);
-  }
-
-  function _transferOwnership(address _newOwner) internal {
-    require(_newOwner != address(0));
-    emit OwnershipTransferred(owner, _newOwner);
-    owner = _newOwner;
+  function balanceOf(address _owner) public view returns (uint256) {
+    return balances[_owner];
   }
 }`
-
 
 const initialState = { 
   name: 'SourceReducer',
