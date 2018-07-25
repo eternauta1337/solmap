@@ -7,9 +7,9 @@ contract BasicToken {
   mapping(address => uint256) balances;
 
   uint256 totalSupply_;
-  constructor() public {
-      totalSupply_ = 10000;
-      balances[msg.sender] = totalSupply_;
+  constructor(uint256 _initialSupply) public {
+      totalSupply_ = _initialSupply;
+      balances[msg.sender] =  _initialSupply;
   }
 
   function totalSupply() public view returns (uint256) {

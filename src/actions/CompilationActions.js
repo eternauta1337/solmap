@@ -11,34 +11,56 @@ const CompilationActions = {
     const source = Store.getState().SourceReducer.source;
     return async dispatch => {
 
-      // Use solc-js to compile.
-      let output = await CompilerUtil.compile(source);
-      output = JSON.parse(output);
-      console.log(`  OUTPUT: `, output);
-      let srcmap;
-
-      // If there are any errors, display that only.
-      if(output.errors) output = CompilerUtil.parseStandardJSONOutputErrors(output.errors).join('\n');
-      // Otherwise parse opcodes and source map.
-      else {
-
-        // Assuming there is only one contract, so get any key.
-        let contract = CompilationActions.getFirstKeyInObject(output.contracts); // Gets object under "Source"
-        contract = CompilationActions.getFirstKeyInObject(contract); // Gets object under "<ContractName>"
-        let bytecode = contract.evm.bytecode.object;
-        let deployedBytecode = contract.evm.deployedBytecode.object;
-        srcmap = contract.evm.bytecode.sourceMap + ';' + contract.evm.deployedBytecode.sourceMap;
-
-        // Disassemble.
-        output = Disassembler.disassemble(bytecode, deployedBytecode);
+      // Attempt compilation more than once if necessary.
+      CompilationActions.compileTries = 0;
+      while(CompilationActions.compileTries < 3) {
+        await CompilationActions.attemptCompilation(source, dispatch);
       }
-
-      dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
-
-      // Compilation resets source mappings.
-      dispatch(MappingActions.outputSelected({start: 0, end: 0}));
-      dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
     }
+  },
+
+  attemptCompilation(source, dispatch) {
+    CompilationActions.compileTries++;
+    console.log(`  attemptCompilation(), try: ${CompilationActions.compileTries}`);
+    return new Promise((resolve, reject) => {
+      
+      // Use solc-js to compile.
+      CompilerUtil.compile(source)
+        .then(output => {
+          console.log(`    Compilation succeeded.`);
+          
+          // Parse output.
+          output = JSON.parse(output);
+          console.log(`    OUTPUT: `, output);
+
+          // If there are any errors, display that only.
+          let srcmap;
+          if(output.errors) output = CompilerUtil.parseStandardJSONOutputErrors(output.errors).join('\n');
+          // Otherwise parse opcodes and source map.
+          else {
+
+            // Assuming there is only one contract, so get any key.
+            let contract = CompilationActions.getFirstKeyInObject(output.contracts); // Gets object under "Source"
+            contract = CompilationActions.getFirstKeyInObject(contract); // Gets object under "<ContractName>"
+            let bytecode = contract.evm.bytecode.object;
+            let deployedBytecode = contract.evm.deployedBytecode.object;
+            srcmap = contract.evm.bytecode.sourceMap + ';' + contract.evm.deployedBytecode.sourceMap;
+
+            // Disassemble.
+            output = Disassembler.disassemble(bytecode, deployedBytecode);
+          }
+
+          dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
+
+          // Compilation resets source mappings.
+          dispatch(MappingActions.outputSelected({start: 0, end: 0}));
+          dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
+        })
+        .catch(err => {
+          console.log(`  Compilation errored.`);
+          CompilationActions.attemptCompilation(source, dispatch);
+        })
+    });
   },
 
   getFirstKeyInObject(object) {

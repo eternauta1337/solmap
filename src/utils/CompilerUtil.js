@@ -15,15 +15,22 @@ const CompilerUtil = {
 
       // Build solc standard json interface object.
       const sources = { "Source": source };
-      const options = { optimize: false };
-      const json = CompilerUtil.buildStandardJSONInput(sources, options)
-      const output = CompilerUtil.compiler.compileStandardWrapper(json);
+      const json = CompilerUtil.buildStandardJSONInput(sources)
+      console.log(`    INPUT: `, JSON.parse(json));
+      // console.log(`  INPUT: `, json);
+      let output; 
+      try {
+        output = CompilerUtil.compiler.compileStandardWrapper(json);
+      }
+      catch(err) {
+        reject(err);
+      }
 
       resolve(output);
     });
   },
 
-  buildStandardJSONInput(sources, options) {
+  buildStandardJSONInput(sources) {
     const newSources = {};
     for(let contractKey in sources) {
       const contractContent = sources[contractKey];
@@ -35,12 +42,14 @@ const CompilerUtil = {
       language: "Solidity",
       sources: newSources,
       settings: {
-        optmizer: {
-          enabled: options.optimize
+        optimizer: {
+          enabled: true,
+          runs: 200
         },
         outputSelection: {
           "*": {
             "*": [
+              "metadata",
               "evm.bytecode.opcodes", 
               "evm.bytecode.sourceMap",
               "evm.deployedBytecode.opcodes",
