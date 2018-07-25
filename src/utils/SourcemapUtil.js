@@ -124,7 +124,7 @@ const SourcemapUtil = {
   // a decompressed source map in a nested array format of the form:
   // [ ['s', 'l', 'f', 'j'], ['s', 'l', 'f', 'j'], ... ]
   decompressSourcemap(srcmap) {
-    console.log(`srcmap (compressed): `, srcmap);
+    // console.log(`srcmap (compressed): `, srcmap);
     
     // Compression:
     // 1:2:1;1:9:1;2:1:2;2:1:2;2:1:2

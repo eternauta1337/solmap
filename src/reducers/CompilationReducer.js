@@ -2,7 +2,7 @@ import * as ActionTypes from '../actions/ActionTypes';
 
 const initialState = { 
   name: 'CompilationReducer',
-  output: '',
+  output: 'Downloading the compiler...',
   srcmap: ''
 };
 
