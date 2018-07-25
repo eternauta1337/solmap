@@ -43,6 +43,7 @@ const CompilerUtil = {
             "*": [
               "evm.bytecode.opcodes", 
               "evm.bytecode.sourceMap",
+              "evm.deployedBytecode.opcodes",
               "evm.deployedBytecode.sourceMap"
             ]
           }

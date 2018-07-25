@@ -2,7 +2,12 @@ let opcodes;
 
 const DisassemblerUtil = {
 
-  disassemble(bytecode) {
+  disassemble(bytecode, deployedBytecode) {
+
+    // Calculate deployed bytecode offset.
+    const bytecodeLen = bytecode.length / 2;
+    const deployedBytecodeLen = deployedBytecode.length / 2;
+    const runtimeOffset = bytecodeLen - deployedBytecodeLen;
 
     let res = ''; // Will contain the disassembled output.
     let currentInstructionIdx = 0;
@@ -28,13 +33,15 @@ const DisassemblerUtil = {
         offset += binaryLen;
 
         // Build output.
-        res += `${currentInstructionIdx} [byte ${currentByteIdx}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})\n`;
+        const offsetStr = currentByteIdx < runtimeOffset ? '' : `, ${currentByteIdx - runtimeOffset}`;
+        res += `${currentInstructionIdx} [${currentByteIdx}${offsetStr}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})\n`;
         currentByteIdx += 1 + binaryLen / 2;
       }
       else {
 
         // Build output.
-        res += `${currentInstructionIdx} [byte ${currentByteIdx}] ${opcode}\n`;
+        const offsetStr = currentByteIdx < runtimeOffset ? '' : `, ${currentByteIdx - runtimeOffset}`;
+        res += `${currentInstructionIdx} [${currentByteIdx}${offsetStr}] ${opcode}\n`;
         currentByteIdx++;
       }
       currentInstructionIdx++;
