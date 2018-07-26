@@ -3,6 +3,7 @@ import Store from '../store';
 import Disassembler from '../utils/DisassemblerUtil';
 import CompilerUtil from '../utils/CompilerUtil';
 import MappingActions from './MappingActions';
+const isHex = require('is-hex');
 
 const CompilationActions = {
 
@@ -11,10 +12,20 @@ const CompilationActions = {
     const source = Store.getState().SourceReducer.source;
     return async dispatch => {
 
-      // Attempt compilation more than once if necessary.
-      CompilationActions.compileTries = 0;
-      while(CompilationActions.compileTries < 3) {
-        await CompilationActions.attemptCompilation(source, dispatch);
+      // Source or bytecode?
+      if(isHex(source)) {
+        CompilationActions.broadcastCompilation(
+          source, 
+          ``,
+          ``,
+          dispatch
+        );
+      }
+      else {
+        CompilationActions.compileTries = 0;
+        while(CompilationActions.compileTries < 3) {
+          await CompilationActions.attemptCompilation(source, dispatch);
+        }
       }
     }
   },
@@ -35,6 +46,8 @@ const CompilationActions = {
 
           // If there are any errors, display that only.
           let srcmap;
+          let bytecode = '';
+          let deployedBytecode = '';
           if(output.errors) output = CompilerUtil.parseStandardJSONOutputErrors(output.errors).join('\n');
           // Otherwise parse opcodes and source map.
           else {
@@ -42,25 +55,43 @@ const CompilationActions = {
             // Assuming there is only one contract, so get any key.
             let contract = CompilationActions.getFirstKeyInObject(output.contracts); // Gets object under "Source"
             contract = CompilationActions.getFirstKeyInObject(contract); // Gets object under "<ContractName>"
-            let bytecode = contract.evm.bytecode.object;
-            let deployedBytecode = contract.evm.deployedBytecode.object;
+            bytecode = contract.evm.bytecode.object;
+            deployedBytecode = contract.evm.deployedBytecode.object;
             srcmap = contract.evm.bytecode.sourceMap + ';' + contract.evm.deployedBytecode.sourceMap;
 
             // Disassemble.
-            output = Disassembler.disassemble(bytecode, deployedBytecode);
+            // output = Disassembler.disassemble(bytecode, deployedBytecode);
           }
 
-          dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
+          CompilationActions.broadcastCompilation(
+            bytecode, 
+            deployedBytecode,
+            srcmap,
+            dispatch
+          );
+          // dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
 
-          // Compilation resets source mappings.
-          dispatch(MappingActions.outputSelected({start: 0, end: 0}));
-          dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
+          // // Compilation resets source mappings.
+          // dispatch(MappingActions.outputSelected({start: 0, end: 0}));
+          // dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
         })
         .catch(err => {
           console.log(`  Compilation errored.`);
           CompilationActions.attemptCompilation(source, dispatch);
         })
     });
+  },
+
+  broadcastCompilation(bytecode, deployedBytecode, srcmap, dispatch) {
+    
+    // Disassemble.
+    let output = Disassembler.disassemble(bytecode, deployedBytecode);
+  
+    dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
+
+    // Compilation resets source mappings.
+    dispatch(MappingActions.outputSelected({start: 0, end: 0}));
+    dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
   },
 
   getFirstKeyInObject(object) {

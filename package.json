@@ -6,6 +6,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "browser-solc": "^1.0.0",
+    "is-hex": "^1.1.3",
     "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
