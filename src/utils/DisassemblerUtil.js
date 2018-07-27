@@ -61,7 +61,7 @@ const DisassemblerUtil = {
 
   hexToOpcode(hex) {
     if(!opcodes) opcodes = DisassemblerUtil.buildOpcodes();
-    return opcodes[hex] || 'INVALID';
+    return opcodes[hex] || `INVALID (${hex})`;
   },
 
   buildOpcodes() {
