@@ -18,7 +18,7 @@ class OutputComponent extends Component {
 
   render() {
     return(
-      <div className='container'>
+      <div>
         <CustomTextarea 
           initialContent={this.props.output}
           highlightRange={this.props.selection}

@@ -16,6 +16,11 @@ const DisassemblerUtil = {
 
     // Sweep bytecode string.
     while(offset < bytecode.length) {
+
+      // Append line break.
+      if(currentInstructionIdx != 0) {
+        res += '\n';
+      }
     
       // Grab the next substring.
       const hex = bytecode.substring(offset, offset + 2);
@@ -34,14 +39,14 @@ const DisassemblerUtil = {
 
         // Build output.
         const offsetStr = currentByteIdx < runtimeOffset ? '' : `, ${currentByteIdx - runtimeOffset}`;
-        res += `${currentInstructionIdx} [${currentByteIdx}${offsetStr}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})\n`;
+        res += `${currentInstructionIdx} [${currentByteIdx}${offsetStr}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})`;
         currentByteIdx += 1 + binaryLen / 2;
       }
       else {
 
         // Build output.
         const offsetStr = currentByteIdx < runtimeOffset ? '' : `, ${currentByteIdx - runtimeOffset}`;
-        res += `${currentInstructionIdx} [${currentByteIdx}${offsetStr}] ${opcode}\n`;
+        res += `${currentInstructionIdx} [${currentByteIdx}${offsetStr}] ${opcode}`;
         currentByteIdx++;
       }
       currentInstructionIdx++;
