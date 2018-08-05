@@ -17,8 +17,9 @@ const CompilationActions = {
         CompilationActions.broadcastCompilation(
           source, 
           ``,
-          ``,
-          dispatch
+          undefined,
+          dispatch,
+          undefined
         );
       }
       else {
@@ -48,7 +49,16 @@ const CompilationActions = {
           let srcmap;
           let bytecode = '';
           let deployedBytecode = '';
-          if(output.errors) output = CompilerUtil.parseStandardJSONOutputErrors(output.errors).join('\n');
+          if(output.errors) {
+            output = CompilerUtil.parseStandardJSONOutputErrors(output.errors).join('\n');
+            CompilationActions.broadcastCompilation(
+              undefined, 
+              ``,
+              undefined,
+              dispatch,
+              output
+            );
+          }
           // Otherwise parse opcodes and source map.
           else {
 
@@ -59,21 +69,14 @@ const CompilationActions = {
             deployedBytecode = contract.evm.deployedBytecode.object;
             srcmap = contract.evm.bytecode.sourceMap + ';' + contract.evm.deployedBytecode.sourceMap;
 
-            // Disassemble.
-            // output = Disassembler.disassemble(bytecode, deployedBytecode);
+            CompilationActions.broadcastCompilation(
+              bytecode, 
+              deployedBytecode,
+              srcmap,
+              dispatch,
+              undefined
+            );
           }
-
-          CompilationActions.broadcastCompilation(
-            bytecode, 
-            deployedBytecode,
-            srcmap,
-            dispatch
-          );
-          // dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
-
-          // // Compilation resets source mappings.
-          // dispatch(MappingActions.outputSelected({start: 0, end: 0}));
-          // dispatch(MappingActions.sourceSelected({start: 0, end: 0}));
         })
         .catch(err => {
           console.log(`  Compilation errored.`);
@@ -82,11 +85,12 @@ const CompilationActions = {
     });
   },
 
-  broadcastCompilation(bytecode, deployedBytecode, srcmap, dispatch) {
+  broadcastCompilation(bytecode, deployedBytecode, srcmap, dispatch, errors) {
     
     // Disassemble.
-    let output = Disassembler.disassemble(bytecode, deployedBytecode);
+    let output = errors ? errors : Disassembler.disassemble(bytecode, deployedBytecode);
   
+    // Update output.
     dispatch(CompilationActions.sourceCompiled(output, srcmap || ''));
 
     // Compilation resets source mappings.
