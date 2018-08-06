@@ -18,7 +18,7 @@ const DisassemblerUtil = {
     while(offset < bytecode.length) {
 
       // Append line break.
-      if(currentInstructionIdx != 0) {
+      if(currentInstructionIdx !== 0) {
         res += '\n';
       }
     

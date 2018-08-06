@@ -94,11 +94,20 @@ const SourcemapUtil = {
 
     // Contain range so that it doesn't fall outside of the srcmap range.
     if(parseInt(instructionRange.end, 10) >= srcmap.length) { 
-      instructionRange.end = 0; 
+      return {start: 0, end: 0}
       console.log(`  srcmap out of range`);
     }
     if(parseInt(instructionRange.start, 10) >= srcmap.length) { 
-      instructionRange.start = 0; 
+      return {start: 0, end: 0}
+      console.log(`  srcmap out of range`);
+    }
+
+    // Return if range belongs to an invalid file.
+    if(
+      parseInt(srcmap[instructionRange.start][2], 10) !== 0 ||
+      parseInt(srcmap[instructionRange.end][2], 10) !== 0
+    ) {
+      return {start: 0, end: 0}
       console.log(`  srcmap out of range`);
     }
     
