@@ -1,5 +1,5 @@
 let opcodes;
-
+https://github.com/ethereum/solidity/blob/develop/test/Options.cpp
 const DisassemblerUtil = {
 
   disassemble(bytecode, deployedBytecode) {
@@ -39,14 +39,14 @@ const DisassemblerUtil = {
 
         // Build output.
         const offsetStr = currentByteIdx < runtimeOffset ? '' : `, ${currentByteIdx - runtimeOffset}`;
-        res += `${currentInstructionIdx} [${currentByteIdx}${offsetStr}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})`;
+        res += `${currentInstructionIdx} {0x${hex}} [${currentByteIdx}${offsetStr}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})`;
         currentByteIdx += 1 + binaryLen / 2;
       }
       else {
 
         // Build output.
         const offsetStr = currentByteIdx < runtimeOffset ? '' : `, ${currentByteIdx - runtimeOffset}`;
-        res += `${currentInstructionIdx} [${currentByteIdx}${offsetStr}] ${opcode}`;
+        res += `${currentInstructionIdx} {0x${hex}} [${currentByteIdx}${offsetStr}] ${opcode}`;
         currentByteIdx++;
       }
       currentInstructionIdx++;
@@ -146,20 +146,20 @@ const DisassemblerUtil = {
     }
 
     // PUSH[1-32] opcodes.
-    for(let i = 0; i <= 32; i++) {
-      let hexKey = (parseInt('5f', 16) + i).toString(16); // Convert to decimal for addition, and return to hex.
+    for(let i = 1; i <= 32; i++) {
+      let hexKey = (parseInt('60', 16) -1 + i).toString(16); // Convert to decimal for addition, and return to hex.
       opcodes[hexKey] = `PUSH${i}`;
     }
 
     // DUP[1-16] opcodes.
-    for(let i = 0; i <= 16; i++) {
-      let hexKey = (parseInt('7f', 16) + i).toString(16);
+    for(let i = 1; i <= 16; i++) {
+      let hexKey = (parseInt('80', 16) -1 + i).toString(16);
       opcodes[hexKey] = `DUP${i}`;
     }
     
     // SWAP[1-16] opcodes.
-    for(let i = 0; i <= 16; i++) {
-      let hexKey = (parseInt('8f', 16) + i).toString(16);
+    for(let i = 1; i <= 16; i++) {
+      let hexKey = (parseInt('90', 16) -1 + i).toString(16);
       opcodes[hexKey] = `SWAP${i}`;
     }
 
