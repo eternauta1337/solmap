@@ -38,15 +38,15 @@ const DisassemblerUtil = {
         offset += binaryLen;
 
         // Build output.
-        const offsetStr = currentByteIdx < runtimeOffset ? '' : `, ${currentByteIdx - runtimeOffset}`;
-        res += `${currentInstructionIdx} {0x${hex}} [${currentByteIdx}${offsetStr}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})`;
+        const offsetStr = currentByteIdx < runtimeOffset ? '' : `, r${currentByteIdx - runtimeOffset}`;
+        res += `${currentInstructionIdx} {0x${hex}} [c${currentByteIdx}${offsetStr}] ${opcode} 0x${num} (dec ${parseInt(num, 16)})`;
         currentByteIdx += 1 + binaryLen / 2;
       }
       else {
 
         // Build output.
-        const offsetStr = currentByteIdx < runtimeOffset ? '' : `, ${currentByteIdx - runtimeOffset}`;
-        res += `${currentInstructionIdx} {0x${hex}} [${currentByteIdx}${offsetStr}] ${opcode}`;
+        const offsetStr = currentByteIdx < runtimeOffset ? '' : `, r${currentByteIdx - runtimeOffset}`;
+        res += `${currentInstructionIdx} {0x${hex}} [c${currentByteIdx}${offsetStr}] ${opcode}`;
         currentByteIdx++;
       }
       currentInstructionIdx++;
