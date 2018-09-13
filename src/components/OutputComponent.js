@@ -22,7 +22,6 @@ class OutputComponent extends Component {
         <CustomTextarea 
           initialContent={this.props.output}
           highlightRange={this.props.selection}
-          onSelect={textarea => this.onTextAreaSelected(textarea)}
         />
       </div>
     );

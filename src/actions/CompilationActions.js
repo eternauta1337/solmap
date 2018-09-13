@@ -44,23 +44,27 @@ const CompilationActions = {
           // Parse output.
           output = JSON.parse(output);
           console.log(`    OUTPUT: `, output);
+          let debug;
+          debug = output.contracts.Source.Simple.evm.debug;
+          // debug = JSON.stringify(debug, null, 2);
+          // console.log(`      META: `, JSON.parse(CompilerUtil.getFirstKeyInObject(output.contracts.Source).metadata));
 
           // If there are any errors, display that only.
           let srcmap;
           let bytecode = '';
           let deployedBytecode = '';
-          if(output.errors) {
-            output = CompilerUtil.parseStandardJSONOutputErrors(output.errors).join('\n');
-            CompilationActions.broadcastCompilation(
-              undefined, 
-              ``,
-              undefined,
-              dispatch,
-              output
-            );
-          }
-          // Otherwise parse opcodes and source map.
-          else {
+          // if(output.errors) {
+          //   output = CompilerUtil.parseStandardJSONOutputErrors(output.errors).join('\n');
+          //   CompilationActions.broadcastCompilation(
+          //     undefined, 
+          //     ``,
+          //     undefined,
+          //     dispatch,
+          //     output
+          //   );
+          // }
+          // // Otherwise parse opcodes and source map.
+          // else {
 
             // Assuming there is only one contract, so get any key.
             let contract = CompilationActions.getFirstKeyInObject(output.contracts); // Gets object under "Source"
@@ -74,9 +78,9 @@ const CompilationActions = {
               deployedBytecode,
               srcmap,
               dispatch,
-              undefined
+              debug
             );
-          }
+          // }
         })
         .catch(err => {
           console.log(`  Compilation errored.`);

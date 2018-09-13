@@ -1,7 +1,8 @@
 // NOTE: BrowserSolc is not used as a regular npm dependency.
 // Instead, it is included as a global variable injected from a script in index.html.
 
-const compilerVersion = 'soljson-v0.4.24+commit.e67f0147.js';
+// const compilerVersion = 'https://ethereum.github.io/solc-bin/bin/soljson-v0.4.24+commit.e67f0147.js';
+const compilerVersion = `https://chriseth.github.io/solc-bin/soljson.js?1234ajklasdasdfasdfasdfasdfasdf`
 
 const CompilerUtil = {
 
