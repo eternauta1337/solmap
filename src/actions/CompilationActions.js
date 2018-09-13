@@ -83,8 +83,10 @@ const CompilationActions = {
           // }
         })
         .catch(err => {
-          console.log(`  Compilation errored.`);
-          CompilationActions.attemptCompilation(source, dispatch);
+          console.log(`  Compilation errored.`, err);
+          setTimeout(function() {
+            CompilationActions.attemptCompilation(source, dispatch);
+          }, 1000);
         })
     });
   },
