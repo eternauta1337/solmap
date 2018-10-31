@@ -9,11 +9,15 @@ const CompilationActions = {
 
   compileSource() {
     console.log(`CompilationActions - compileSource()`);
-    const source = Store.getState().SourceReducer.source;
+    let source = Store.getState().SourceReducer.source;
     return async dispatch => {
 
+      // Determine of the source is bytecode.
+      if(source.indexOf('0x') == 0) source = source.substring(2);
+      const isBytecode = isHex(source);
+
       // Source or bytecode?
-      if(isHex(source)) {
+      if(isBytecode) {
         CompilationActions.broadcastCompilation(
           source, 
           ``,
